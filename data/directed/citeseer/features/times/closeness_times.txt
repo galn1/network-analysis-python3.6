@@ -1,0 +1,5 @@
+Start Closeness Centrality at: 
+2017-03-28 16:31:58.076000
+2017-03-28 16:31:58.091000
+finish! 
+It Took: 0.0150001049042

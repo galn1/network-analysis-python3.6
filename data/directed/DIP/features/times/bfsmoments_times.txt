@@ -1,0 +1,5 @@
+Start BFS distance distribution at: 
+2017-05-04 18:50:30.487485
+2017-05-04 18:52:06.230003
+finish! 
+It Took: 95.7425050735
