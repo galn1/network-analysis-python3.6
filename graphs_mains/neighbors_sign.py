@@ -8,6 +8,7 @@ from graphs_mains.features_calculator import featuresCalculator
 import graphs_mains.featuresList as featuresList
 import pickle
 import numpy as np
+np.set_printoptions(threshold=np.nan)
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 import os
@@ -298,7 +299,7 @@ def samples(gnx,nodes,sample_size):
 # load graph using networkx
 # graph_name = 'neighbors_test'
 # for graph_name in ['cora', 'citeseer']:
-for graph_name in ['cora', 'citeseer']:
+for graph_name in ['cora']:
     file_in = './../data/directed/' + graph_name + '/input/'+graph_name+'.txt'
     print (' start reload graph')
     gnx = initGraph.init_graph(draw=False, file_name=file_in, directed=True, Connected=True)

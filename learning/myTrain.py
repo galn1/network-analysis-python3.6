@@ -116,7 +116,7 @@ def deepLearning(feature_matrix, tags_vector, nodeWithTags_to_features, gnx, tra
             cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=prediction, labels=Z))
         optimizer = tf.train.AdamOptimizer().minimize(cost)
 
-        hm_epochs = 2000
+        hm_epochs = 500
         batch_size = 100
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
@@ -217,18 +217,21 @@ def deepLearning(feature_matrix, tags_vector, nodeWithTags_to_features, gnx, tra
             accuracy_file.close()
             confusion_matrix_file.close()
             # weights_file.close()
-
+    # number of classes
+    n_classes = max(tags_vector) + 1
     # True if the node is in the test set
     test_mask = [False for i in range(int(len(gnx.nodes())))]
     # True if the node is in the train set
     train_mask = [True for i in range(int(len(gnx.nodes())))]
     # the classification matrix
-    tags = feature_matrix[:,0:-1]
+    tags = [[0 for i in range(int(n_classes))] for j in range(len(gnx.nodes()))]
+    # tags = np.asarray(feature_matrix[:,0:-1])
     tags = np.asmatrix(tags)
+    for i in range(len(gnx.nodes())):
+        tags[i,int(tags_vector[i])] = 1
     for i in range(int(train_size*len(gnx.nodes())),len(gnx.nodes())):
         train_mask[i] = False
         test_mask[i] = True
-        tags[i,int(tags_vector[i])] = 1
     # y_train = feature_matrix[:,-1]
     # y_test = feature_matrix[:,-1]
     # for index in range(len(list(tags_vector))):
@@ -250,8 +253,6 @@ def deepLearning(feature_matrix, tags_vector, nodeWithTags_to_features, gnx, tra
     #     for j in range(len(nodeWithTags_to_features)):
     #         adj[i,j] /= (ns[i]*ns[j])
 
-    # number of classes
-    n_classes = max(tags_vector) + 1
 
     #for n_nodes_hl1 in [500,281,158,89,50]:
 
@@ -262,14 +263,15 @@ def deepLearning(feature_matrix, tags_vector, nodeWithTags_to_features, gnx, tra
             # for b in ['doShuffle','doNotShuffle']:
                 # for a in ['elu','relu']:
                     # for n_nodes_hl1 in [25,20,10]:
+    print(feature_matrix)
     for dropout in [1]:
         # regularization
         for c in [0]:
             for b in ['doShuffle']:
                 for a in ['elu']:
                     for n_nodes_hl1 in [25]:
-                        for run in range(5):
-                            path = 'C:/Users/Admin/Desktop/galfork/outputs/'+ graph_name+'/'+str(analysis_type) + ', ' + b + ', ' + a + ', ls ' + str([n_nodes_hl1]) + ', 2000 epochs, batch size 100'+', run'+str(run+1)
+                        for run in range(10,15):
+                            path = 'C:/Users/Admin/Desktop/galfork/outputs/'+ graph_name+'/'+str(analysis_type) + ', ' + b + ', ' + a + ', ls ' + str([n_nodes_hl1]) + ', 500 epochs, batch size 100'+', run'+str(run+1)
                             if(not os.path.exists(path)):
                                 os.makedirs(path)
                                 # the input matrix
