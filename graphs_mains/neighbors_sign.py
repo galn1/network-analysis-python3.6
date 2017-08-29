@@ -298,7 +298,7 @@ def samples(gnx,nodes,sample_size):
 # load graph using networkx
 # graph_name = 'neighbors_test'
 # for graph_name in ['cora', 'citeseer']:
-for graph_name in ['cora']:
+for graph_name in ['cora', 'citeseer']:
     file_in = './../data/directed/' + graph_name + '/input/'+graph_name+'.txt'
     print (' start reload graph')
     gnx = initGraph.init_graph(draw=False, file_name=file_in, directed=True, Connected=True)
@@ -319,7 +319,7 @@ for graph_name in ['cora']:
     for analysis_type in types:
         print(str(analysis_type))
         global_features = calc_global_features(analysis_type)[1]
-        for test_size in [0.1 * i for i in range(1,10)]:
+        for test_size in [0.2]:
             # for train_set in range(5):
             print ('test_size',test_size)
             x_train, x_test, y_train, y_test = split_train_test(gnx.nodes(), tags_dict, test_size,random_state=2)
